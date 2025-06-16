@@ -1,14 +1,14 @@
 <h1>📚 Multi-Format Study Assistant</h1>
 
-<p>Welcome to the <strong>Multi-Format Study Assistant</strong>, your AI-powered tool for uploading study materials (PDFs, PPTs, Word docs, images, etc.) and generating:</p>
+<p>Welcome to the <strong>Multi-Format Study Assistant</strong>, your AI-powered tool for uploading study materials (PDFs, PPTs, Word docs, etc.) and generating:</p>
 
 <ul>
   <li>📝 Smart summaries</li>
   <li>🧠 Conceptual quizzes</li>
-  <li>💬 Chat interface for interactive Q&A</li>
+  <li>💬 Chat interface for interactive Q&amp;A</li>
 </ul>
 
-<p>This app is built using <strong>Streamlit</strong> and <strong>LangChain</strong> with support from <strong>Google Generative AI</strong>, <strong>FAISS</strong>, and <strong>OCR</strong> libraries.</p>
+<p>This app is built using <strong>Streamlit</strong> and <strong>LangChain</strong> with support from <strong>Google Generative AI</strong> and <strong>FAISS</strong>.</p>
 
 <hr>
 
@@ -29,13 +29,12 @@
 
 <h3>3. 📂 Multi-Format File Uploader</h3>
 <ul>
-  <li>Supports: <code>.pdf</code>, <code>.pptx</code>, <code>.docx</code>, <code>.doc</code>, <code>.txt</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code></li>
-  <li>Automatically detects and uses OCR if PDFs/images lack extractable text.</li>
+  <li>Supports: <code>.pdf</code>, <code>.pptx</code>, <code>.docx</code>, <code>.doc</code>, <code>.txt</code></li>
+  <li>Automatically falls back to OCR for PDFs when no extractable text is found.</li>
   <li><code>process_uploaded_file()</code> handles format detection and text extraction:</li>
   <ul>
-    <li>PDF: <code>pdfplumber</code> and fallback to OCR using <code>pytesseract</code></li>
+    <li>PDF: <code>pdfplumber</code> and fallback OCR using <code>pytesseract</code></li>
     <li>PPT/DOC/TXT: via <code>Unstructured</code> loaders</li>
-    <li>Images: directly OCR with preview saved</li>
   </ul>
 </ul>
 
@@ -71,7 +70,6 @@
   <ul>
     <li>Summary view with sectioned notes</li>
     <li>Quiz generation form and evaluation</li>
-    <li>Display of OCR processed image if used</li>
   </ul>
   <li><strong>Interactive quiz form:</strong></li>
   <ul>
@@ -88,8 +86,7 @@
   <li><strong>Upload File:</strong> File is saved temporarily and detected by extension.</li>
   <li><strong>Text Extraction:</strong></li>
   <ul>
-    <li>Uses <code>pdfplumber</code>, <code>Unstructured</code>, or <code>pytesseract</code></li>
-    <li>Image fallback and OCR preview if needed</li>
+    <li>Uses <code>pdfplumber</code>, <code>Unstructured</code>, or <code>pytesseract</code> depending on format</li>
   </ul>
   <li><strong>Text Saved:</strong> Extracted content saved to <code>st.session_state.text_content</code></li>
   <li><strong>LLM Invocations:</strong></li>
@@ -107,10 +104,9 @@
 <hr>
 
 <h2>✅ Requirements</h2>
-<p>Make sure to install required packages:</p>
-<pre><code>pip install streamlit langchain langchain-community langchain-core langchain-google-genai pdfplumber pytesseract pillow faiss-cpu
-</code></pre>
-<p>Ensure you have <a href="https://github.com/tesseract-ocr/tesseract">Tesseract-OCR</a> installed and accessible in PATH.</p>
+<p>Install all dependencies using:</p>
+<pre><code>pip install -r requirements.txt</code></pre>
+<p>Make sure <a href="https://github.com/tesseract-ocr/tesseract">Tesseract-OCR</a> is installed and in your system PATH.</p>
 
 <hr>
 
@@ -129,7 +125,6 @@
 <h2>💡 Tips</h2>
 <ul>
   <li>Use clear, structured documents for best results</li>
-  <li>Images must be readable for OCR to work properly</li>
   <li>Use <code>/summary</code> or <code>/quiz</code> commands in chat for quick interaction</li>
 </ul>
 
@@ -149,4 +144,5 @@
 <hr>
 
 <p>Happy Learning! ✨</p>
+
 
