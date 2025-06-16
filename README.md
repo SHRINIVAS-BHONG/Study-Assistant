@@ -8,7 +8,7 @@
   <li>💬 Chat interface for interactive Q&amp;A</li>
 </ul>
 
-<p>This app is built using <strong>Streamlit</strong> and <strong>LangChain</strong> with support from <strong>Google Generative AI</strong> and <strong>FAISS</strong>.</p>
+<p>This application is built using <strong>Streamlit</strong> and <strong>LangChain</strong> with support from <strong>Google Generative AI</strong> and <strong>FAISS</strong>.</p>
 
 <hr>
 
