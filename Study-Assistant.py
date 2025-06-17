@@ -25,6 +25,9 @@ google_api_key = os.getenv("GOOGLE_API_KEY")
 # 🧠 Chatbot Functions
 # ===============================
 def generate_response(command, text_content, llm, vectorstore=None, chat_history=None):
+    """
+    Generate response based on user command with chat history context
+    """
     command = command.lower().strip()
     if command.startswith(("/quiz", "generate quiz", "create quiz")):
         return generate_quiz(text_content, llm)
@@ -36,18 +39,17 @@ def generate_response(command, text_content, llm, vectorstore=None, chat_history
 def generate_quiz(text_content, llm):
     prompt_qa = PromptTemplate(
         template=(
-            "Generate 3 to 7 multiple choice questions with 4 options each from the PDF content.\n"
-            "Format each question EXACTLY like:\n"
-            "Q1: [Question text]\n"
-            "A. [Option A]\n"
-            "B. [Option B] <-- correct\n"
-            "C. [Option C]\n"
-            "D. [Option D]\n\n"
-            "Important Rules:\n"
-            "1. Always mark the correct answer with '<-- correct' after the option\n"
-            "2. Use LaTeX for math formulas (e.g., $E=mc^2$)\n"
-            "3. Number questions sequentially starting with Q1\n"
-            "4. Include exactly 4 options per question\n\n"
+            "Generate 3 to 7 multiple choice questions with 4 options each from the content below.\n"
+            "Focus exclusively on conceptual questions only.\n"
+            "Number them sequentially as Q1, Q2, etc.\n"
+            "Mark the correct option clearly using '<-- correct'.\n"
+            "Format each question exactly like this example:\n"
+            "Q1: What is the capital of France?\n"
+            "A. London\n"
+            "B. Paris <-- correct\n"
+            "C. Berlin\n"
+            "D. Madrid\n"
+            "For mathematical questions, use LaTeX format surrounded by $ symbols.\n\n"
             "Content:\n{text}"
         ),
         input_variables=["text"]
@@ -59,7 +61,7 @@ def generate_quiz(text_content, llm):
 def generate_summary(text_content, llm):
     summary_prompt = PromptTemplate(
         template=(
-            "Generate a comprehensive summary of the PDF content. Include:\n"
+            "Generate a comprehensive summary of the following content. Include:\n"
             "1. Key concepts and main ideas\n"
             "2. Important formulas and equations (presented in LaTeX format between $$ symbols)\n"
             "3. Critical relationships and dependencies\n"
@@ -74,25 +76,32 @@ def generate_summary(text_content, llm):
     return response.content
 
 def answer_question(question, text_content, llm, vectorstore, chat_history=None):
+    """
+    Answer user question with context from document and chat history
+    """
+    # Prepare conversation history context
     history_context = ""
     if chat_history:
+        # Format: [Human/AI]: message
         for msg in chat_history:
             if isinstance(msg, HumanMessage):
                 history_context += f"Human: {msg.content}\n"
             elif isinstance(msg, AIMessage):
                 history_context += f"AI: {msg.content}\n"
     
+    # Get document context
     if vectorstore:
         related_docs = vectorstore.invoke(question)
         context = "\n\n".join(doc.page_content for doc in related_docs)
     else:
         context = text_content[:8000]
     
+    # Create prompt with history and document context
     qa_prompt = PromptTemplate(
         template=(
-            "Use the following conversation history and PDF context to answer the question.\n\n"
+            "Use the following conversation history and document context to answer the question.\n\n"
             "CONVERSATION HISTORY:\n{history}\n\n"
-            "PDF CONTENT:\n{context}\n\n"
+            "DOCUMENT CONTEXT:\n{context}\n\n"
             "QUESTION: {question}\n\n"
             "Answer in detail with relevant formulas in LaTeX format ($$...$$). "
             "If unsure, say you don't know."
@@ -101,7 +110,7 @@ def answer_question(question, text_content, llm, vectorstore, chat_history=None)
     )
     
     formatted_prompt = qa_prompt.format(
-        history=history_context[:2000],
+        history=history_context[:2000],  # Limit history length
         context=context,
         question=question
     )
