@@ -1,148 +1,173 @@
-<h1>📚 Multi-Format Study Assistant</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Study Assistant - Features</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #4CAF50;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            color: #34495e;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        .feature-section {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+        }
+        .feature-section p {
+            margin-bottom: 10px;
+        }
+        .feature-section ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+        .feature-section ul li {
+            margin-bottom: 8px;
+        }
+        .icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+            color: #4CAF50;
+        }
+        .note {
+            background-color: #ecf0f1;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            color: #2c3e50;
+        }
+        .code-example {
+            background-color: #eee;
+            border-left: 3px solid #f39c12;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
 
-<p>Welcome to the <strong>Multi-Format Study Assistant</strong>, your AI-powered tool for uploading study materials (PDFs, PPTs, Word docs, etc.) and generating:</p>
+    <h1>📚 PDF Study Assistant</h1>
+    <p style="text-align: center; font-size: 1.1em; color: #555;">Your intelligent companion for mastering PDF study materials.</p>
 
-<ul>
-  <li>📝 Smart summaries</li>
-  <li>🧠 Conceptual quizzes</li>
-  <li>💬 Chat interface for interactive Q&amp;A</li>
-</ul>
+    <div class="note">
+        This document outlines the core functionalities of the PDF Study Assistant, designed to enhance your learning experience through AI-powered tools.
+    </div>
 
-<p>This application is built using <strong>Streamlit</strong> and <strong>LangChain</strong> with support from <strong>Google Generative AI</strong> and <strong>FAISS</strong>.</p>
+    <h2>🌟 Key Functionalities</h2>
 
-<hr>
+    <div class="feature-section">
+        <h3><span class="icon">📁</span> Robust PDF Processing</h3>
+        <p>The application is equipped with advanced PDF handling capabilities, ensuring that your study materials are accurately processed regardless of their format.</p>
+        <ul>
+            <li><b>Standard Text Extraction:</b> Leverages `pdfplumber` to extract text from standard, text-based PDFs efficiently.</li>
+            <li><b>Optical Character Recognition (OCR):</b> If direct text extraction fails (e.g., for scanned documents or image-based PDFs), the application seamlessly switches to `pytesseract` to perform OCR, converting images within the PDF into searchable and readable text. This ensures comprehensive coverage and accessibility for diverse document types.</li>
+            <li><b>Temporary File Management:</b> Securely handles uploaded files using temporary storage, ensuring privacy and efficient resource management.</li>
+        </ul>
+    </div>
 
-<h2>🚀 Features Overview</h2>
+    <div class="feature-section">
+        <h3><span class="icon">💬</span> Interactive Chat with PDF</h3>
+        <p>Engage in a dynamic conversation with your PDF document. This feature allows you to ask specific questions about the content and receive relevant, detailed answers.</p>
+        <ul>
+            <li><b>Context-Aware Responses:</b> Utilizes `LangChain` and `FAISS` to create a vector store from your PDF content, enabling the AI to retrieve and reference the most relevant sections of the document when answering your questions.</li>
+            <li><b>Conversation History:</b> Maintains a memory of your chat, allowing for follow-up questions and more coherent discussions.</li>
+            <li><b>LaTeX Support:</b> Automatically renders mathematical formulas and equations in beautiful LaTeX format ($$E=mc^2$$) within the chat responses, making it ideal for technical and scientific documents.</li>
+            <li><b>Direct Commands:</b> Supports special commands within the chat for quick actions:
+                <div class="code-example">
+                    /summary<br>
+                    /quiz<br>
+                    Explain the concept of [topic]
+                </div>
+            </li>
+        </ul>
+    </div>
 
-<h3>1. 🔄 Session Initialization</h3>
-<ul>
-  <li>Initializes <code>st.session_state</code> with default values for tracking uploaded file, extracted text, quiz, summary, chat history, and vector store.</li>
-  <li>Ensures smooth multi-component state management.</li>
-</ul>
+    <div class="feature-section">
+        <h3><span class="icon">📝</span> Comprehensive Summary Generation</h3>
+        <p>Quickly grasp the essence of your PDF content with an AI-generated summary. This feature is perfect for reviewing long documents or getting a high-level overview.</p>
+        <ul>
+            <li><b>Key Concepts & Main Ideas:</b> Extracts and presents the most important information.</li>
+            <li><b>Formulas and Equations:</b> Identifies and includes crucial mathematical expressions, presented in LaTeX format for clarity.</li>
+            <li><b>Critical Relationships:</b> Highlights dependencies and connections between different concepts discussed in the document.</li>
+            <li><b>Practical Applications:</b> Points out real-world examples or applications mentioned within the text.</li>
+            <li><b>Structured Output:</b> Delivers summaries with clear sections and bullet points for easy readability.</li>
+        </ul>
+    </div>
 
-<h3>2. 🎨 Styled UI and Header</h3>
-<ul>
-  <li>Custom CSS for buttons, messages, chat inputs.</li>
-  <li>Header shows current file and a toggle between chat and document view.</li>
-  <li><code>setup_ui()</code> and <code>show_header()</code> manage this.</li>
-</ul>
+    <div class="feature-section">
+        <h3><span class="icon">🧠</span> Dynamic Quiz Generation</h3>
+        <p>Test your understanding with custom quizzes generated directly from your PDF. This interactive feature helps in active recall and self-assessment.</p>
+        <ul>
+            <li><b>Multiple Choice Questions:</b> Generates 3 to 7 multiple-choice questions with four options each.</li>
+            <li><b>Correct Answer Indication:</b> Clearly marks the correct answer for each question.</li>
+            <li><b>LaTeX Integration:</b> Questions and options can include mathematical formulas rendered in LaTeX.</li>
+            <li><b>Interactive Quiz Interface:</b> Users can select answers directly within the application.</li>
+            <li><b>Instant Feedback:</b> Upon submission, the application calculates and displays your score, and provides detailed feedback on correct and incorrect answers, including the correct solution.</li>
+            <li><b>Quiz Retake Option:</b> Allows users to easily retry the quiz for repeated practice.</li>
+        </ul>
+    </div>
 
-<h3>3. 📂 Multi-Format File Uploader</h3>
-<ul>
-  <li>Supports: <code>.pdf</code>, <code>.pptx</code>, <code>.docx</code>, <code>.doc</code>, <code>.txt</code></li>
-  <li>Automatically falls back to OCR for PDFs when no extractable text is found.</li>
-  <li><code>process_uploaded_file()</code> handles format detection and text extraction:</li>
-  <ul>
-    <li>PDF: <code>pdfplumber</code> and fallback OCR using <code>pytesseract</code></li>
-    <li>PPT/DOC/TXT: via <code>Unstructured</code> loaders</li>
-  </ul>
-</ul>
+    <div class="feature-section">
+        <h3><span class="icon">🚀</span> Powered by Modern AI</h3>
+        <p>The PDF Study Assistant leverages state-of-the-art Large Language Models (LLMs) and embedding technologies to deliver intelligent and accurate responses.</p>
+        <ul>
+            <li><b>Google Generative AI Embeddings:</b> Used for creating dense vector representations of the PDF content, enabling efficient semantic search.</li>
+            <li><b>Groq Chat API (`llama3-8b-8192`):</b> Powers the conversational and content generation capabilities, ensuring fast and relevant AI interactions.</li>
+        </ul>
+    </div>
 
-<h3>4. 🧠 AI Interaction & Commands</h3>
-<ul>
-  <li>Central chat command handler using <code>generate_response()</code></li>
-  <ul>
-    <li><code>/summary</code> → calls <code>generate_summary()</code></li>
-    <li><code>/quiz</code> → calls <code>generate_quiz()</code></li>
-    <li>Custom questions → <code>answer_question()</code> uses vectorstore or full context</li>
-  </ul>
-  <li><strong>Summary Generator:</strong></li>
-  <ul>
-    <li>Extracts key concepts, equations, applications with LaTeX formatting</li>
-  </ul>
-  <li><strong>Quiz Generator:</strong></li>
-  <ul>
-    <li>3 to 7 multiple-choice conceptual questions</li>
-    <li>Answers marked with <code>&lt;-- correct</code></li>
-    <li>Supports LaTeX formatting for math</li>
-  </ul>
-  <li><strong>Chat Interface:</strong></li>
-  <ul>
-    <li>Fully styled conversation interface</li>
-    <li>Retains chat history context for follow-ups</li>
-    <li>Accepts commands and natural language questions</li>
-  </ul>
-</ul>
+    <div class="feature-section">
+        <h3><span class="icon">✨</span> Intuitive User Interface (Streamlit)</h3>
+        <p>Built with Streamlit, the application features a clean, responsive, and user-friendly interface for a seamless study experience.</p>
+        <ul>
+            <li><b>Clear Navigation:</b> Easy toggling between chat and PDF tools views.</li>
+            <li><b>Session Management:</b> Intelligent session state handling ensures a smooth experience, especially when switching between different PDF files.</li>
+            <li><b>Custom Styling:</b> Enhanced visual appeal with custom CSS for buttons, chat messages, and overall layout.</li>
+        </ul>
+    </div>
 
-<h3>5. 📑 Document Interaction View</h3>
-<ul>
-  <li><code>show_document_processing_view()</code> provides:</li>
-  <ul>
-    <li>Summary view with sectioned notes</li>
-    <li>Quiz generation form and evaluation</li>
-  </ul>
-  <li><strong>Interactive quiz form:</strong></li>
-  <ul>
-    <li>Uses <code>st.form()</code> for user selections</li>
-    <li>Calculates score and displays detailed results</li>
-    <li>Celebratory balloons and scorecard</li>
-  </ul>
-</ul>
-
-<hr>
-
-<h2>🛠️ How It Works</h2>
-<ol>
-  <li><strong>Upload File:</strong> File is saved temporarily and detected by extension.</li>
-  <li><strong>Text Extraction:</strong></li>
-  <ul>
-    <li>Uses <code>pdfplumber</code>, <code>Unstructured</code>, or <code>pytesseract</code> depending on format</li>
-  </ul>
-  <li><strong>Text Saved:</strong> Extracted content saved to <code>st.session_state.text_content</code></li>
-  <li><strong>LLM Invocations:</strong></li>
-  <ul>
-    <li>Summary and quiz generation use LangChain’s <code>PromptTemplate</code> + Google Generative AI</li>
-    <li>Questions use retrieval-augmented generation (RAG) if <code>vectorstore</code> is present</li>
-  </ul>
-  <li><strong>Chat Memory:</strong></li>
-  <ul>
-    <li>Chat history (Human + AI messages) used to generate contextual answers</li>
-    <li>Stored persistently across interactions</li>
-  </ul>
-</ol>
-
-<hr>
-
-<h2>✅ Requirements</h2>
-<p>Install all dependencies using:</p>
-<pre><code>pip install -r requirements.txt</code></pre>
-<p>Make sure <a href="https://github.com/tesseract-ocr/tesseract">Tesseract-OCR</a> is installed and in your system PATH.</p>
-
-<hr>
-
-<h2>📌 Folder Structure</h2>
-<pre><code>├── app.py                       # Main Streamlit launcher (not shown here)
-├── session_state.py            # initialize_session_state()
-├── ui.py                       # setup_ui(), show_header(), show_file_uploader()
-├── file_processor.py           # process_uploaded_file()
-├── chat.py                     # generate_response(), chat, summary, quiz logic
-├── document_view.py            # show_document_processing_view()
-└── README.md                   # This file
-</code></pre>
-
-<hr>
-
-<h2>💡 Tips</h2>
-<ul>
-  <li>Use clear, structured documents for best results</li>
-  <li>Use <code>/summary</code> or <code>/quiz</code> commands in chat for quick interaction</li>
-</ul>
-
-<hr>
-
-<h2>🙌 Credits</h2>
-<p>Made using:</p>
-<ul>
-  <li>OpenAI + LangChain + Google Generative AI</li>
-  <li>Streamlit</li>
-  <li>FAISS</li>
-  <li>OCR (Tesseract)</li>
-</ul>
-
-<p>This project is ideal for students, educators, and learners who want to turn study material into interactive content.</p>
-
-<hr>
-
-<p>Happy Learning! ✨</p>
+</body>
+</html>
+```
 
 
